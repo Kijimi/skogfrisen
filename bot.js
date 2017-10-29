@@ -16,13 +16,11 @@ bot.on("ready", async ready => {
 
 bot.on("message", async message => {
 	if(message.author.bot) return;
-	if(message.content.indexOf(botSettings.prefix) !== 0) return;
 
-	let messageArray = message.content.split(" ");
-    let command = messageArray[0];
-    let args = messageArray.slice(1);
-
-    if(!command.startsWith(botSettings.prefix)) return;
+	let args = message.content.slice(botSettings.prefix.length).trim().split(/ +/g);
+	let command = args.shift().toLowerCase();
+	
+    if(message.content.indexOf(botSettings.prefix) !== 0) return;
 
 	if(command === "ping") {
 		const m = await message.channel.send("Calculating ping...");
@@ -49,14 +47,22 @@ bot.on("message", async message => {
 
 
 	if(command === `wiki`) {
+		if (args.length < 1) return;
 		const { RichEmbed } = require('discord.js');
 		const entries = {
 			soren: {
 				title: "Soren",
 				color: "#5dade2",
-				description: "Soren (pronounced sorr-en) is a male Barn Owl, or Tyto alba, and was the main protagonist of the first six Guardians of Ga'Hoole books and the deuteragonist of the last 9 books, as well as the leader of the Band and creator of the Chaw of Chaws.",
+				description: "Soren (pronounced sorr-en) is a male [Barn Owl](http://guardiansofgahoole.wikia.com/wiki/Barn_Owls), or Tyto alba, and was the main protagonist of the first six Guardians of Ga'Hoole books and the deuteragonist of the last 9 books, as well as the leader of [the Band](http://guardiansofgahoole.wikia.com/wiki/The_Band) and creator of the [Chaw of Chaws](http://guardiansofgahoole.wikia.com/wiki/Chaw_of_Chaws).",
 				image: "https://vignette.wikia.nocookie.net/guardiansofgahoole/images/d/dd/Soren9937.JPG/revision/latest?cb=20161225012250",
-				url: "URL HERE"
+				url: "http://guardiansofgahoole.wikia.com/wiki/Soren_(Books)"
+			},
+			gyflie: {
+				title: "Gylfie",
+				color: "#5dade2",
+				description: "Gylfie (pronounced gill-fee) is a female elf owl, or Micrathene whitneyi. She was hatched and raised in the [Desert of Kuneer](http://guardiansofgahoole.wikia.com/wiki/The_Desert_of_Kuneer), but was later kidnapped by a [St. Aggie's](http://guardiansofgahoole.wikia.com/wiki/St._Aegolius_Academy_for_Orphaned_Owls) patrol when she fell out of her nest trying to fly before she was ready. She is a member of [the Band](http://guardiansofgahoole.wikia.com/wiki/The_Band) (and the only female as well) and the [Chaw of Chaws](http://guardiansofgahoole.wikia.com/wiki/Chaw_of_Chaws), as well as [Soren](http://guardiansofgahoole.wikia.com/wiki/Soren)'s best friend.",
+				image: "https://vignette.wikia.nocookie.net/guardiansofgahoole/images/0/09/Cowdrey_Gylfie_.png/revision/latest?cb=20160720183102",
+				url: "http://guardiansofgahoole.wikia.com/wiki/Gylfie_(Books)"
 			}
 		};
 
